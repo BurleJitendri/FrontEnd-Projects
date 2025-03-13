@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Image Gallery</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <h1 style="text-align: center;">IMAGE GALLERY</h1>
+        <div class="full-img" id="fullImgBox">
+            <img src="images/img1.jpg" id="fullImg">
+            <span onclick="closeFullImg()"><b>&times;</b></span>
+            <div class="nav-btn prev-btn" onclick="prevImg()">&#10094;</div>
+        <div class="nav-btn next-btn" onclick="nextImg()">&#10095;</div>
+        </div>
+        <div class="img-gallery">
+            <img src="images/img1.jpg" onclick="openFullImg(this.src)">
+            <img src="images/img2.jpg" onclick="openFullImg(this.src)">
+            <img src="images/img3.jpg" onclick="openFullImg(this.src)">
+            <img src="images/img4.jpg" onclick="openFullImg(this.src)">
+            <img src="images/img5.jpg" onclick="openFullImg(this.src)">
+            <img src="images/img6.jpg" onclick="openFullImg(this.src)">
+            <img src="images/img7.jpg" onclick="openFullImg(this.src)">
+            <img src="images/img8.jpg" onclick="openFullImg(this.src)">
+        </div>
+
+        <script>
+            var fullImgBox = document.getElementById("fullImgBox");
+            var fullImg = document.getElementById("fullImg");
+            var galleryImgs = document.querySelectorAll(".img-gallery img");
+            var currentIndex = 0; // Track the current image index
+        
+            function openFullImg(pic) {
+                fullImgBox.style.display = "flex";
+                fullImg.src = pic;
+                currentIndex = Array.from(galleryImgs).findIndex(img => img.src === pic);
+            }
+        
+            function closeFullImg() {
+                fullImgBox.style.display = "none";
+            }
+        
+            function prevImg() {
+                currentIndex = (currentIndex - 1 + galleryImgs.length) % galleryImgs.length;
+                fullImg.src = galleryImgs[currentIndex].src;
+            }
+        
+            function nextImg() {
+                currentIndex = (currentIndex + 1) % galleryImgs.length;
+                fullImg.src = galleryImgs[currentIndex].src;
+            }
+        
+            document.addEventListener("keydown", function(event) {
+                if (fullImgBox.style.display === "flex") {
+                    if (event.key === "ArrowLeft") prevImg();
+                    if (event.key === "ArrowRight") nextImg();
+                    if (event.key === "Escape") closeFullImg();
+                }
+            });
+        
+            fullImgBox.addEventListener("click", function(event) {
+                if (event.target === fullImgBox) closeFullImg();
+            });
+        </script>
+        
+    </body>
+</html>
